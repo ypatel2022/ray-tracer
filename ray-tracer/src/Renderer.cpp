@@ -229,7 +229,7 @@ glm::vec4 Renderer::PerPixel(uint32_t x, uint32_t y)
 		if (payload.HitDistance < 0.0f)
 		{
 			glm::vec3 skyColor = glm::vec3(0.6f, 0.7f, 0.9f);
-			// light += skyColor * contribution;
+			light += skyColor * contribution;
 			break;
 		}
 
@@ -237,7 +237,8 @@ glm::vec4 Renderer::PerPixel(uint32_t x, uint32_t y)
 		const Material& mat = m_ActiveScene->Materials[sphere.MaterialIndex];
 
 		contribution *= mat.Albedo;
-		light += mat.GetEmission();
+		// * mat.albedo makes the reflected light have color
+		light += mat.GetEmission() * contribution;
 
 		ray.Origin = payload.WorldPosition + payload.WorldNormal * 0.0001f;
 
@@ -248,7 +249,6 @@ glm::vec4 Renderer::PerPixel(uint32_t x, uint32_t y)
 		else
 		{
 			ray.Direction = glm::normalize(Utils::InUnitSphere(seed) + payload.WorldNormal);
-
 		}
 	}
 

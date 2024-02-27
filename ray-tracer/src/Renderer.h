@@ -15,8 +15,8 @@ public:
 	struct Settings
 	{
 		bool Accumulate = true;
-		bool SlowRandom = true;
-		int Bounces = 2;
+		bool SlowRandom = false;
+		int Bounces = 4;
 	};
 
 public:
